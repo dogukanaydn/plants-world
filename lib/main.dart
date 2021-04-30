@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'landing-page.dart';
-// import 'bottom-navigation-bar/navigation.dart';
 
 void main() => runApp(MyApp());
 
