@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:plants_world/pages/signup.dart';
 //import 'package:flutter_svg/flutter_svg.dart';
 import 'package:plants_world/theme/constants.dart';
+import 'package:plants_world/pages/login.dart';
 
 class LandingPage extends StatelessWidget {
   @override
@@ -31,7 +33,11 @@ class LandingPage extends StatelessWidget {
                   "Login",
                   style: TextStyle(color: Colors.white),
                 ),
-                onPressed: () {},
+                onPressed: () {
+                  Navigator.push(context, MaterialPageRoute(builder: (context) {
+                    return Login();
+                  }));
+                },
               ),
             ),
           ),
@@ -48,7 +54,11 @@ class LandingPage extends StatelessWidget {
                   "Sign Up",
                   style: TextStyle(color: AppConstants.purple),
                 ),
-                onPressed: () {},
+                onPressed: () {
+                  Navigator.push(context, MaterialPageRoute(builder: (context) {
+                    return SignUp();
+                  }));
+                },
               ),
             ),
           )
