@@ -75,7 +75,7 @@ class _ListViewHomeState extends State<ListViewHome> {
             padding: const EdgeInsets.symmetric(horizontal: 8.0),
             child: Card(
               color: isWatered == true
-                  ? AppConstants.green
+                  ? AppConstants.lightPurple
                   : AppConstants.lightRed,
               child: ListTile(
                 title: Text(
