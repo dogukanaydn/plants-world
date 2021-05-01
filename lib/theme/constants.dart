@@ -10,8 +10,8 @@ class AppConstants {
 }
 
 class CustomTextHeadline {
-  static final headLine6 = TextStyle(
-    fontSize: 20,
-    fontWeight: FontWeight.normal,
-  );
+  static final headLine5 = TextStyle(
+      fontSize: 24, fontWeight: FontWeight.normal, color: Colors.black);
+  static final headLine6 =
+      TextStyle(fontSize: 20, fontWeight: FontWeight.bold, color: Colors.black);
 }
