@@ -1,4 +1,4 @@
-import 'dart:html';
+// import 'dart:html';
 import 'package:flutter/material.dart';
 import 'package:plants_world/theme/constants.dart';
 import 'package:plants_world/pages/login.dart';
@@ -6,7 +6,6 @@ import 'package:plants_world/pages/login.dart';
 class SignUp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    // TODO: implement build
     return Scaffold(
         body: Center(
       child: Container(
@@ -74,10 +73,12 @@ class SignUp extends StatelessWidget {
                 obscureText: true,
                 decoration: InputDecoration(
                   suffix: TextButton(
-                      child: Text(
-                    "show",
-                    style: TextStyle(color: AppConstants.purple),
-                  )),
+                    child: Text(
+                      "show",
+                      style: TextStyle(color: AppConstants.purple),
+                    ),
+                    onPressed: () {},
+                  ),
                   filled: true,
                   fillColor: AppConstants.searchGrey,
                   prefixIcon: Icon(Icons.lock),

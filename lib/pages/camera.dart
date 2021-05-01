@@ -5,7 +5,6 @@ import 'package:plants_world/theme/constants.dart';
 class Camera extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    // TODO: implement build
     Size size = MediaQuery.of(context).size;
     return Scaffold(
         body: Container(
