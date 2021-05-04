@@ -13,21 +13,27 @@ class _SearchState extends State<Search> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Search'),
+        backgroundColor: Colors.white,
+        elevation: 0,
+        centerTitle: true,
+        title: Text(
+          'Search',
+          style: TextStyle(color: Colors.black),
+        ),
       ),
-      body: MyCustomForm(),
+      body: SearchPage(),
     );
   }
 }
 
-class MyCustomForm extends StatefulWidget {
+class SearchPage extends StatefulWidget {
   @override
-  MyCustomFormState createState() {
-    return MyCustomFormState();
+  SearchPageState createState() {
+    return SearchPageState();
   }
 }
 
-class MyCustomFormState extends State<MyCustomForm> {
+class SearchPageState extends State<SearchPage> {
   List<int> listOfImages = [1, 2, 3, 4, 5];
   @override
   Widget build(BuildContext context) {

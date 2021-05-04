@@ -32,7 +32,7 @@ class ListViewHome extends StatefulWidget {
 }
 
 class _ListViewHomeState extends State<ListViewHome> {
-  bool isWatered = true;
+  bool isWatered = false;
 
   final titles = [
     "Bitki 1",
@@ -112,7 +112,6 @@ class _ListViewHomeState extends State<ListViewHome> {
                           primary: AppConstants.grey,
                           shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(25.0),
-                            side: BorderSide(color: Colors.red),
                           ),
                         ),
                         child: Text(

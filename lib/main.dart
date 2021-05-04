@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'landing-page.dart';
-import 'pages/details.dart';
 
 void main() => runApp(MyApp());
 
@@ -14,7 +13,7 @@ class MyApp extends StatelessWidget {
         primarySwatch: Colors.blue,
         visualDensity: VisualDensity.adaptivePlatformDensity,
       ),
-      home: Details(),
+      home: LandingPage(),
     );
   }
 }
