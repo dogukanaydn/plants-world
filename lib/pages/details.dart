@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:plants_world/bottom-navigation-bar/navigation.dart';
 import '../theme/constants.dart';
 
 class Details extends StatefulWidget {
