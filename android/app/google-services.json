@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "640247440425",
+    "project_id": "plants-world-a817f",
+    "storage_bucket": "plants-world-a817f.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:640247440425:android:c80e33be3858f4a96f6838",
+        "android_client_info": {
+          "package_name": "com.plants.plants_world"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "640247440425-hjfg13n37d5qot0oi912md6vn1jgied0.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBlQ9jYOHuMsFgo8ARi-mQbaMHopdcaZas"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "640247440425-hjfg13n37d5qot0oi912md6vn1jgied0.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

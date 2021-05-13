@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:plants_world/pages/signup.dart';
-//import 'package:flutter_svg/flutter_svg.dart';
 import 'package:plants_world/theme/constants.dart';
 import 'package:plants_world/pages/login.dart';
 
