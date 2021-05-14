@@ -1,33 +1,33 @@
 {
   "project_info": {
-    "project_number": "640247440425",
-    "project_id": "plants-world-a817f",
-    "storage_bucket": "plants-world-a817f.appspot.com"
+    "project_number": "268957212520",
+    "project_id": "plants-world-9abcd",
+    "storage_bucket": "plants-world-9abcd.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:640247440425:android:c80e33be3858f4a96f6838",
+        "mobilesdk_app_id": "1:268957212520:android:2dde4b4ea7d91220ed40dd",
         "android_client_info": {
-          "package_name": "com.plants.plants_world"
+          "package_name": "com.example.plants_world"
         }
       },
       "oauth_client": [
         {
-          "client_id": "640247440425-hjfg13n37d5qot0oi912md6vn1jgied0.apps.googleusercontent.com",
+          "client_id": "268957212520-q5vpu553jlmbu3rpa77c1v2dnj3q0srf.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyBlQ9jYOHuMsFgo8ARi-mQbaMHopdcaZas"
+          "current_key": "AIzaSyB219uPPwYTHq6QMOCqVKOFouItmFjR4g0"
         }
       ],
       "services": {
         "appinvite_service": {
           "other_platform_oauth_client": [
             {
-              "client_id": "640247440425-hjfg13n37d5qot0oi912md6vn1jgied0.apps.googleusercontent.com",
+              "client_id": "268957212520-q5vpu553jlmbu3rpa77c1v2dnj3q0srf.apps.googleusercontent.com",
               "client_type": 3
             }
           ]
