@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import '../theme/constants.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 
 class Details extends StatefulWidget {
   Details({Key key}) : super(key: key);
@@ -29,64 +30,87 @@ class DetailsPage extends StatefulWidget {
 }
 
 class _DetailsPageState extends State<DetailsPage> {
+  FirebaseFirestore firestore = FirebaseFirestore.instance;
+
+  CollectionReference allPlants =
+      FirebaseFirestore.instance.collection('All Plants');
+
   @override
   Widget build(BuildContext context) {
-    return ListView(
-      children: [
-        imageSection,
-        buttonSection,
-        photoGalleryHeadline,
-        photoGallerySection,
-        sunmarySection,
-      ],
+    return FutureBuilder<DocumentSnapshot>(
+      future: allPlants.doc('2rgaNPy7aGRi3d9DQBUg').get(),
+      builder:
+          (BuildContext context, AsyncSnapshot<DocumentSnapshot> snapshot) {
+        if (snapshot.hasError) {
+          return Text("Something went wrong");
+        }
+
+        if (snapshot.hasData && !snapshot.data.exists) {
+          return Text("Document does not exist");
+        }
+
+        if (snapshot.connectionState == ConnectionState.done) {
+          Map<String, dynamic> data = snapshot.data.data();
+          return ListView(
+            children: [
+              imageSection(data),
+              buttonSection,
+              photoGalleryHeadline,
+              photoGallerySection(data),
+              sunmarySection(data),
+            ],
+          );
+        }
+
+        return Text("Hata");
+      },
     );
   }
 
-  Widget imageSection = Container(
-    child: Stack(
-      children: [
-        Positioned(
-          child: Align(
-            alignment: Alignment.center,
-            child: Container(
-              width: 375,
-              height: 400,
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.only(
-                  bottomLeft: Radius.circular(100),
-                  bottomRight: Radius.circular(100),
-                ),
-                image: DecorationImage(
-                    image: NetworkImage(
-                        "https://images.unsplash.com/photo-1619873068038-b25550eeff69?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=1918&q=80"),
-                    fit: BoxFit.cover),
-              ),
-            ),
-          ),
-        ),
-        Positioned.fill(
-          child: Align(
-            alignment: Alignment.bottomCenter,
-            child: Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: Container(
-                color: AppConstants.purple,
-                child: Padding(
-                  padding: const EdgeInsets.all(4.0),
-                  child: Text(
-                    "Bitkinin Orjinal İsmi",
-                    style: TextStyle(
-                      color: Colors.white,
+  Widget imageSection(data) => Container(
+        child: Stack(
+          children: [
+            Positioned(
+              child: Align(
+                alignment: Alignment.center,
+                child: Container(
+                  width: 375,
+                  height: 400,
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.only(
+                      bottomLeft: Radius.circular(100),
+                      bottomRight: Radius.circular(100),
                     ),
+                    image: DecorationImage(
+                        image: NetworkImage("${data['photos'][0]}"),
+                        fit: BoxFit.cover),
                   ),
                 ),
               ),
             ),
-          ),
-        )
-      ],
-    ),
-  );
+            Positioned.fill(
+              child: Align(
+                alignment: Alignment.bottomCenter,
+                child: Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Container(
+                    color: AppConstants.purple,
+                    child: Padding(
+                      padding: const EdgeInsets.all(4.0),
+                      child: Text(
+                        "${data['plant name']}",
+                        style: TextStyle(
+                          color: Colors.white,
+                        ),
+                      ),
+                    ),
+                  ),
+                ),
+              ),
+            )
+          ],
+        ),
+      );
 
   Widget buttonSection = Container(
     child: Row(
@@ -133,57 +157,57 @@ class _DetailsPageState extends State<DetailsPage> {
   Widget photoGalleryHeadline = Padding(
     padding: const EdgeInsets.only(left: 25, top: 10),
     child: Text(
-      "Photo Gallery",
+      "Photo test",
       style: CustomTextHeadline.headLine6,
     ),
   );
 
-  Widget photoGallerySection = Container(
-    padding: EdgeInsets.only(left: 20),
-    child: SizedBox(
-      height: 100,
-      child: ListView.builder(
-          scrollDirection: Axis.horizontal,
-          itemCount: 5,
-          itemBuilder: (context, index) {
-            return Padding(
-              padding: const EdgeInsets.all(5),
-              child: ClipRRect(
-                borderRadius: BorderRadius.circular(8.0),
-                child: Image.network(
-                  "https://images.unsplash.com/photo-1619873068038-b25550eeff69?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=1918&q=80",
-                  width: 100,
-                  height: 100,
-                  fit: BoxFit.cover,
-                ),
-              ),
-            );
-          }),
-    ),
-  );
+  Widget photoGallerySection(data) => Container(
+        padding: EdgeInsets.only(left: 20),
+        child: SizedBox(
+          height: 100,
+          child: ListView.builder(
+              scrollDirection: Axis.horizontal,
+              itemCount: 5,
+              itemBuilder: (context, index) {
+                return Padding(
+                  padding: const EdgeInsets.all(5),
+                  child: ClipRRect(
+                    borderRadius: BorderRadius.circular(8.0),
+                    child: Image.network(
+                      "${data['photos'][index]}",
+                      width: 100,
+                      height: 100,
+                      fit: BoxFit.cover,
+                    ),
+                  ),
+                );
+              }),
+        ),
+      );
 
-  Widget sunmarySection = Container(
-    padding: const EdgeInsets.only(left: 25, top: 10, right: 5),
-    child: Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Text(
-          "Summary",
-          style: CustomTextHeadline.headLine6,
+  Widget sunmarySection(data) => Container(
+        padding: const EdgeInsets.only(left: 25, top: 10, right: 5),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Text(
+              "Summary",
+              style: CustomTextHeadline.headLine6,
+            ),
+            Text(
+              "${data['summary']}",
+              softWrap: true,
+            ),
+            Text(
+              "Watering Frequency",
+              style: CustomTextHeadline.headLine6,
+            ),
+            Text(
+              "${data['watering frequency']}",
+              softWrap: true,
+            ),
+          ],
         ),
-        Text(
-          "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.",
-          softWrap: true,
-        ),
-        Text(
-          "Watering Frequency",
-          style: CustomTextHeadline.headLine6,
-        ),
-        Text(
-          "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.",
-          softWrap: true,
-        ),
-      ],
-    ),
-  );
+      );
 }
