@@ -1,6 +1,7 @@
 import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:plants_world/theme/constants.dart';
 import 'package:tflite/tflite.dart';
 
 class TFLite extends StatefulWidget {
@@ -29,7 +30,7 @@ class _TFLiteState extends State<TFLite> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("Cat Dog Identifier"),
+        title: Text("Plant World"),
       ),
       body: Center(
         child: Column(
@@ -55,11 +56,12 @@ class _TFLiteState extends State<TFLite> {
                 child: (_imageFile != null)
                     ? Image.file(_imageFile)
                     : Image.network('https://i.imgur.com/sUFH1Aq.png')),
-            RaisedButton(
-                onPressed: () {
-                  selectImage();
-                },
-                child: Icon(Icons.camera)),
+            ElevatedButton(
+              onPressed: () {
+                selectImage();
+              },
+              child: Icon(Icons.camera),
+            ),
             SizedBox(height: 20),
             SingleChildScrollView(
               child: Column(
@@ -67,17 +69,42 @@ class _TFLiteState extends State<TFLite> {
                     ? _classifiedResult.map((result) {
                         return Card(
                           elevation: 0.0,
-                          color: Colors.lightBlue,
+                          color: AppConstants.lightPurple,
                           child: Container(
                             width: 300,
                             margin: EdgeInsets.all(10),
                             child: Center(
-                              child: Text(
-                                "${result["label"]} :  ${(result["confidence"] * 100).toStringAsFixed(1)}%",
-                                style: TextStyle(
-                                    color: Colors.black,
-                                    fontSize: 18.0,
-                                    fontWeight: FontWeight.bold),
+                              child: Column(
+                                children: [
+                                  Text(
+                                    "${result["label"]} :  ${(result["confidence"] * 100).toStringAsFixed(1)}%",
+                                    style: TextStyle(
+                                        color: Colors.black,
+                                        fontSize: 18.0,
+                                        fontWeight: FontWeight.bold),
+                                  ),
+                                  Padding(
+                                    padding: const EdgeInsets.only(top: 50),
+                                    child: ClipRRect(
+                                      borderRadius: BorderRadius.circular(30),
+                                      child: TextButton(
+                                        style: TextButton.styleFrom(
+                                            backgroundColor:
+                                                AppConstants.purple,
+                                            minimumSize: Size(300, 60),
+                                            primary: AppConstants.grey),
+                                        child: Text(
+                                          "Learn More",
+                                          style: TextStyle(color: Colors.white),
+                                        ),
+                                        onPressed: () {
+                                          Navigator.pushNamed(
+                                              context, '/details');
+                                        },
+                                      ),
+                                    ),
+                                  ),
+                                ],
                               ),
                             ),
                           ),
