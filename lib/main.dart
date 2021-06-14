@@ -1,7 +1,16 @@
 import 'package:flutter/material.dart';
-import 'landing-page.dart';
-import 'pages/details.dart';
 import 'package:firebase_core/firebase_core.dart';
+
+import 'landing-screen/landing-page.dart';
+import 'login/login.dart';
+import 'pages/camera.dart';
+import 'pages/details.dart';
+import 'pages/home.dart';
+import 'pages/notifications.dart';
+import 'pages/profile.dart';
+import 'pages/search.dart';
+import 'signUp/signUp.dart';
+import 'tflite/tflite.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -19,7 +28,19 @@ class MyApp extends StatelessWidget {
         primarySwatch: Colors.blue,
         visualDensity: VisualDensity.adaptivePlatformDensity,
       ),
-      home: LandingPage(),
+      initialRoute: '/tflite',
+      routes: {
+        '/': (context) => LandingPage(),
+        '/login': (context) => Login(),
+        '/signUp': (context) => SignUp(),
+        '/home': (context) => Home(),
+        '/search': (context) => Search(),
+        '/tflite': (context) => TFLite(),
+        '/notification': (context) => Notifications(),
+        '/profile': (context) => Profile(),
+        '/camera': (context) => Camera(),
+        '/details': (context) => Details()
+      },
     );
   }
 }

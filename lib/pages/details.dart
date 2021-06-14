@@ -30,6 +30,15 @@ class DetailsPage extends StatefulWidget {
 }
 
 class _DetailsPageState extends State<DetailsPage> {
+  @override
+  void initState() {
+    super.initState();
+    print(DateTime.now());
+    // Timer.periodic(new Duration(seconds: 1), (timer) {
+    //   debugPrint(DateTime.now().toString());
+    // });
+  }
+
   FirebaseFirestore firestore = FirebaseFirestore.instance;
 
   CollectionReference allPlants =
@@ -157,7 +166,7 @@ class _DetailsPageState extends State<DetailsPage> {
   Widget photoGalleryHeadline = Padding(
     padding: const EdgeInsets.only(left: 25, top: 10),
     child: Text(
-      "Photo test",
+      "Photo Gallery",
       style: CustomTextHeadline.headLine6,
     ),
   );
