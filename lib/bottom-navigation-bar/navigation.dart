@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:plants_world/auth/auth.dart';
 import '../pages/search.dart';
 import '../pages/home.dart';
 import '../pages/notifications.dart';
@@ -6,13 +7,21 @@ import '../pages/profile.dart';
 import '../theme/constants.dart';
 
 class NavigationBar extends StatefulWidget {
+  NavigationBar({this.auth, this.onSignedOut});
+  final BaseAuth auth;
+  final VoidCallback onSignedOut;
   @override
   _NavigationBarState createState() => _NavigationBarState();
 }
 
 class _NavigationBarState extends State<NavigationBar> {
   int currentTab = 0;
-  final List<Widget> screens = [Home(), Search(), Notifications(), Profile()];
+  final List<Widget> screens = [
+    Home(),
+    Search(),
+    Notifications(),
+    ProfilePage()
+  ];
 
   final PageStorageBucket bucket = PageStorageBucket();
   Widget currentScreen = Home();
@@ -27,7 +36,9 @@ class _NavigationBarState extends State<NavigationBar> {
       floatingActionButton: FloatingActionButton(
         backgroundColor: AppConstants.purple,
         child: Icon(Icons.camera_alt),
-        onPressed: () {},
+        onPressed: () {
+          Navigator.pushNamed(context, '/tflite');
+        },
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
       bottomNavigationBar: BottomAppBar(
@@ -111,7 +122,11 @@ class _NavigationBarState extends State<NavigationBar> {
                     minWidth: 40,
                     onPressed: () {
                       setState(() {
-                        currentScreen = Profile();
+                        currentScreen = ProfilePage(
+                          auth: widget.auth,
+                          // onSignedOut: widget._signedOut,
+                          onSignedOut: widget.onSignedOut,
+                        );
                         currentTab = 3;
                       });
                     },

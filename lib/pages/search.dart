@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:plants_world/bottom-navigation-bar/navigation.dart';
 import 'package:plants_world/theme/constants.dart';
 
 class Search extends StatefulWidget {
@@ -21,49 +22,34 @@ class _SearchState extends State<Search> {
           style: TextStyle(color: Colors.black),
         ),
       ),
-      body: SearchPage(),
-    );
-  }
-}
-
-class SearchPage extends StatefulWidget {
-  @override
-  SearchPageState createState() {
-    return SearchPageState();
-  }
-}
-
-class SearchPageState extends State<SearchPage> {
-  List<int> listOfImages = [1, 2, 3, 4, 5];
-  @override
-  Widget build(BuildContext context) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: <Widget>[
-        Padding(
-          padding: EdgeInsets.symmetric(horizontal: 8, vertical: 16),
-          child: TextField(
-            decoration: InputDecoration(
-              prefixIcon: Icon(Icons.search),
-              filled: true,
-              fillColor: AppConstants.searchGrey,
-              border:
-                  OutlineInputBorder(borderRadius: BorderRadius.circular(50)),
-              hintText: 'Search for plants',
+      body: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: <Widget>[
+          Padding(
+            padding: EdgeInsets.symmetric(horizontal: 8, vertical: 16),
+            child: TextField(
+              decoration: InputDecoration(
+                prefixIcon: Icon(Icons.search),
+                filled: true,
+                fillColor: AppConstants.searchGrey,
+                border:
+                    OutlineInputBorder(borderRadius: BorderRadius.circular(50)),
+                hintText: 'Search for plants',
+              ),
             ),
           ),
-        ),
-        Padding(
-          padding: const EdgeInsets.all(8.0),
-          child: Text(
-            'All Plants',
-            style: CustomTextHeadline.headLine6,
+          Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: Text(
+              'All Plants',
+              style: CustomTextHeadline.headLine6,
+            ),
           ),
-        ),
-        Expanded(
-          child: _buildGrid(),
-        )
-      ],
+          Expanded(
+            child: _buildGrid(),
+          )
+        ],
+      ),
     );
   }
 

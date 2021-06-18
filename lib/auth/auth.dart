@@ -1,4 +1,3 @@
-import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
 abstract class BaseAuth {
@@ -24,6 +23,7 @@ class Auth implements BaseAuth {
     User user = (await _firebaseAuth.createUserWithEmailAndPassword(
             email: email, password: password))
         .user;
+
     return user.uid;
   }
 

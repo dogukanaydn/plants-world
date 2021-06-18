@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:plants_world/controllers/myPlantsController.dart';
 import 'package:plants_world/theme/constants.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 
 class Notifications extends StatefulWidget {
   Notifications({Key key}) : super(key: key);
@@ -9,6 +11,8 @@ class Notifications extends StatefulWidget {
 }
 
 class _NotificationsState extends State<Notifications> {
+  final PlantsController _controller = PlantsController();
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -21,11 +25,84 @@ class _NotificationsState extends State<Notifications> {
           style: TextStyle(color: Colors.black),
         ),
       ),
-      body: ListViewHome(),
+      body: StreamBuilder<QuerySnapshot>(
+        stream: _controller.readItems(),
+        builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
+          if (snapshot.hasError) {
+            return Text('Something went wrong');
+          }
+
+          if (snapshot.connectionState == ConnectionState.waiting) {
+            return Text("Loading");
+          }
+
+          return new ListView(
+            children: snapshot.data.docs.map((DocumentSnapshot document) {
+              Map<String, dynamic> data =
+                  document.data() as Map<String, dynamic>;
+              return Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 8.0),
+                child: Card(
+                  color: data['is_watered'] == true
+                      ? AppConstants.lightPurple
+                      : AppConstants.lightRed,
+                  child: ListTile(
+                    title: Text(
+                      data['plant_name'],
+                      style: data['is_watered'] == true
+                          ? TextStyle(color: Colors.black)
+                          : TextStyle(color: Colors.white),
+                    ),
+                    subtitle: Text(
+                      "test",
+                      style: data['is_watered'] == true
+                          ? TextStyle(
+                              color: Colors.black,
+                              fontWeight: FontWeight.w100,
+                              fontStyle: FontStyle.italic)
+                          : TextStyle(
+                              color: Colors.white,
+                              fontWeight: FontWeight.w100,
+                              fontStyle: FontStyle.italic),
+                    ),
+                    leading: CircleAvatar(
+                      backgroundImage: NetworkImage(data['photo']),
+                    ),
+                    trailing: data['is_watered'] == true
+                        ? Icon(
+                            Icons.check,
+                            color: Colors.green[900],
+                          )
+                        : TextButton(
+                            style: TextButton.styleFrom(
+                              backgroundColor: Colors.white,
+                              minimumSize: Size(100, 40),
+                              primary: AppConstants.grey,
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(25.0),
+                              ),
+                            ),
+                            child: Text(
+                              "Şimdi Sula",
+                              style: TextStyle(color: AppConstants.purple),
+                            ),
+                            onPressed: () {
+                              _controller.setWater(
+                                plant_name: data['plant_name'],
+                              );
+                            },
+                          ),
+                  ),
+                ),
+              );
+            }).toList(),
+          );
+        },
+      ),
     );
   }
 }
-
+/*
 class ListViewHome extends StatefulWidget {
   @override
   _ListViewHomeState createState() => _ListViewHomeState();
@@ -126,3 +203,4 @@ class _ListViewHomeState extends State<ListViewHome> {
         });
   }
 }
+*/

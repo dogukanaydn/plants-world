@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:plants_world/auth/home_page.dart';
+import 'package:plants_world/bottom-navigation-bar/navigation.dart';
 import 'login_page.dart';
 import 'auth.dart';
 
@@ -50,10 +50,14 @@ class _RootPageState extends State<RootPage> {
           onSignedIn: _signedIn,
         );
       case AuthStatus.signedIn:
-        return HomePage(
+        return NavigationBar(
           auth: widget.auth,
           onSignedOut: _signedOut,
         );
+      // return HomePage(
+      //   auth: widget.auth,
+      //   onSignedOut: _signedOut,
+      // );
     }
     return LoginPageDemo(auth: widget.auth);
   }

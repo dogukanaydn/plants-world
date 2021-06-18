@@ -1,6 +1,7 @@
 import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:plants_world/pages/details.dart';
 import 'package:plants_world/theme/constants.dart';
 import 'package:tflite/tflite.dart';
 
@@ -28,6 +29,7 @@ class _TFLiteState extends State<TFLite> {
 
   @override
   Widget build(BuildContext context) {
+    String plant_name;
     return Scaffold(
       appBar: AppBar(
         title: Text("Plant World"),
@@ -98,8 +100,15 @@ class _TFLiteState extends State<TFLite> {
                                           style: TextStyle(color: Colors.white),
                                         ),
                                         onPressed: () {
-                                          Navigator.pushNamed(
-                                              context, '/details');
+                                          plant_name = result['label'];
+                                          Navigator.push(
+                                            context,
+                                            MaterialPageRoute(
+                                              builder: (context) => Details(
+                                                plant_name: plant_name,
+                                              ),
+                                            ),
+                                          );
                                         },
                                       ),
                                     ),
