@@ -1,4 +1,5 @@
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:plants_world/user/userInformations.dart';
 
 abstract class BaseAuth {
   Future<String> signInWithEmailAndPassword(String email, String password);
@@ -15,6 +16,10 @@ class Auth implements BaseAuth {
     User user = (await _firebaseAuth.signInWithEmailAndPassword(
             email: email, password: password))
         .user;
+    UserInformations.userUid = user.uid;
+
+    print("user idsi: ${UserInformations.userUid}");
+
     return user.uid;
   }
 
@@ -23,7 +28,8 @@ class Auth implements BaseAuth {
     User user = (await _firebaseAuth.createUserWithEmailAndPassword(
             email: email, password: password))
         .user;
-
+    UserInformations.userUid = user.uid;
+    print("user idsi: ${UserInformations.userUid}");
     return user.uid;
   }
 
