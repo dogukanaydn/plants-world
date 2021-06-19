@@ -17,6 +17,7 @@ class Notifications extends StatefulWidget {
 class _NotificationsState extends State<Notifications> {
   final PlantsController _controller = PlantsController();
   final RealtimeDB _realtimeDB = RealtimeDB();
+  Timestamp isNextWatered;
   Timestamp isWatered;
 
   @override
@@ -27,13 +28,6 @@ class _NotificationsState extends State<Notifications> {
     timer = Timer.periodic(Duration(seconds: 10), (_) {
       setState(() {});
     });
-  }
-
-  bool checkWatered(Timestamp timestamp) {
-    if (timestamp.toDate().isAfter(DateTime.now())) {
-      return true;
-    }
-    return false;
   }
 
   @override
@@ -64,61 +58,71 @@ class _NotificationsState extends State<Notifications> {
               Map<String, dynamic> data =
                   document.data() as Map<String, dynamic>;
 
-              isWatered = data['time_next_watered'];
+              isNextWatered = data['time_next_watered'];
+              isWatered = data['time_watered'];
+
+              var isWateredFormatDateTime = isWatered.toDate();
+              var timeOfNow = DateTime.now();
+              Duration difference =
+                  timeOfNow.difference(isWateredFormatDateTime);
+              var timeago = difference.inSeconds;
 
               return Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 8.0),
                 child: Card(
-                  color: checkWatered(data['time_next_watered']) == true
+                  color: isNextWatered.toDate().isAfter(DateTime.now()) == true
                       ? AppConstants.lightPurple
                       : AppConstants.lightRed,
                   child: ListTile(
                     title: Text(
                       data['plant_name'],
-                      style: isWatered.toDate().isAfter(DateTime.now()) == true
-                          ? TextStyle(color: Colors.black)
-                          : TextStyle(color: Colors.white),
+                      style:
+                          isNextWatered.toDate().isAfter(DateTime.now()) == true
+                              ? TextStyle(color: Colors.black)
+                              : TextStyle(color: Colors.white),
                     ),
                     subtitle: Text(
-                      "",
-                      style: isWatered.toDate().isAfter(DateTime.now()) == true
-                          ? TextStyle(
-                              color: Colors.black,
-                              fontWeight: FontWeight.w100,
-                              fontStyle: FontStyle.italic)
-                          : TextStyle(
-                              color: Colors.white,
-                              fontWeight: FontWeight.w100,
-                              fontStyle: FontStyle.italic),
+                      "You watered $timeago seconds ago ",
+                      style:
+                          isNextWatered.toDate().isAfter(DateTime.now()) == true
+                              ? TextStyle(
+                                  color: Colors.red,
+                                  // fontWeight: FontWeight.w100,
+                                  fontStyle: FontStyle.italic)
+                              : TextStyle(
+                                  color: Colors.black,
+                                  // fontWeight: FontWeight.w100,
+                                  fontStyle: FontStyle.italic),
                     ),
                     leading: CircleAvatar(
                       backgroundImage: NetworkImage(data['photo']),
                     ),
-                    trailing: isWatered.toDate().isAfter(DateTime.now()) == true
-                        ? Icon(
-                            Icons.check,
-                            color: Colors.green[900],
-                          )
-                        : TextButton(
-                            style: TextButton.styleFrom(
-                              backgroundColor: Colors.white,
-                              minimumSize: Size(100, 40),
-                              primary: AppConstants.grey,
-                              shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(25.0),
+                    trailing:
+                        isNextWatered.toDate().isAfter(DateTime.now()) == true
+                            ? Icon(
+                                Icons.check,
+                                color: Colors.green[900],
+                              )
+                            : TextButton(
+                                style: TextButton.styleFrom(
+                                  backgroundColor: Colors.white,
+                                  minimumSize: Size(100, 40),
+                                  primary: AppConstants.grey,
+                                  shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(25.0),
+                                  ),
+                                ),
+                                child: Text(
+                                  "Şimdi Sula",
+                                  style: TextStyle(color: AppConstants.purple),
+                                ),
+                                onPressed: () {
+                                  //_realtimeDB.updateData();
+                                  _controller.setWater(
+                                      plantName: data['plant_name'],
+                                      wateringTime: data['watering_time']);
+                                },
                               ),
-                            ),
-                            child: Text(
-                              "Şimdi Sula",
-                              style: TextStyle(color: AppConstants.purple),
-                            ),
-                            onPressed: () {
-                              //_realtimeDB.updateData();
-                              _controller.setWater(
-                                  plantName: data['plant_name'],
-                                  wateringTime: data['watering_time']);
-                            },
-                          ),
                   ),
                 ),
               );
