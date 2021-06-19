@@ -38,6 +38,7 @@ class _DetailsState extends State<Details> {
     int id;
     String plant_name;
     String photo;
+    int watering_time;
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.white,
@@ -62,11 +63,13 @@ class _DetailsState extends State<Details> {
             id = data['id'];
             plant_name = data['plant_name'];
             photo = data['photos'][0];
+            watering_time = data['watering_time'];
+
             print("id: $id and plant name: $plant_name");
             return ListView(
               children: [
                 imageSection(data),
-                buttonSection(id, plant_name, photo),
+                buttonSection(id, plant_name, photo, watering_time),
                 photoGalleryHeadline,
                 photoGallerySection(data),
                 sunmarySection(data),
@@ -123,7 +126,7 @@ class _DetailsState extends State<Details> {
         ),
       );
 
-  Widget buttonSection(id, plant_name, photo) => Container(
+  Widget buttonSection(id, plant_name, photo, watering_time) => Container(
         child: Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
@@ -142,7 +145,10 @@ class _DetailsState extends State<Details> {
                   ),
                   onPressed: () {
                     _controller.addItem(
-                        id: id, plant_name: plant_name, photo: photo);
+                        id: id,
+                        plant_name: plant_name,
+                        photo: photo,
+                        watering_time: watering_time);
                     Navigator.push(
                       context,
                       MaterialPageRoute(builder: (context) => NavigationBar()),

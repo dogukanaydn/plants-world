@@ -9,7 +9,11 @@ class PlantsController {
     _mainCollection = _firestore.collection('user_plants');
   }
 
-  Future<void> addItem({int id, String plant_name, String photo}) async {
+  Future<void> addItem(
+      {int id, String plant_name, String photo, int watering_time}) async {
+    var today = DateTime.now();
+    var time_watered = today.add(Duration(days: watering_time));
+
     DocumentReference documentReferencer = _mainCollection
         .doc('o3d0fB74NdeaQNmvrw2SItbbo152')
         .collection('plants')
@@ -21,6 +25,8 @@ class PlantsController {
       "photo": photo,
       "is_deleted": false,
       "is_watered": true,
+      "time_added": today,
+      "time_watered": time_watered,
     };
 
     await documentReferencer
