@@ -93,8 +93,8 @@ class _NotificationsState extends State<Notifications> {
                               _showDialog(context, 5);
                               //_realtimeDB.updateData();
                               _controller.setWater(
-                                plant_name: data['plant_name'],
-                              );
+                                  plant_name: data['plant_name'],
+                                  watering_time: data['watering_time']);
                             },
                           ),
                   ),

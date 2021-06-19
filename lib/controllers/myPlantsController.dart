@@ -24,10 +24,12 @@ class PlantsController {
       "id": id,
       "plant_name": plant_name,
       "photo": photo,
+      "watering_time": watering_time,
       "is_deleted": false,
       "is_watered": true,
       "time_added": today,
-      "time_watered": time_watered,
+      "time_watered": today,
+      "time_next_watered": time_watered,
     };
 
     await documentReferencer
@@ -59,7 +61,9 @@ class PlantsController {
         .catchError((e) => print(e));
   }
 
-  Future<void> setWater({String plant_name}) async {
+  Future<void> setWater({String plant_name, int watering_time}) async {
+    var today = DateTime.now();
+    var time_watered = today.add(Duration(days: watering_time));
     DocumentReference documentReferencer = _mainCollection
         .doc(UserInformations.userUid)
         .collection('plants')
@@ -67,6 +71,8 @@ class PlantsController {
 
     Map<String, dynamic> data = <String, dynamic>{
       "is_watered": true,
+      "time_watered": today,
+      "time_next_watered": time_watered,
     };
     await documentReferencer
         .update(data)
