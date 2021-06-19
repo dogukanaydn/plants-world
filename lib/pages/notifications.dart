@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:plants_world/controllers/myPlantsController.dart';
 import 'package:plants_world/controllers/realtime.dart';
@@ -43,6 +45,7 @@ class _NotificationsState extends State<Notifications> {
             children: snapshot.data.docs.map((DocumentSnapshot document) {
               Map<String, dynamic> data =
                   document.data() as Map<String, dynamic>;
+
               return Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 8.0),
                 child: Card(
@@ -57,7 +60,7 @@ class _NotificationsState extends State<Notifications> {
                           : TextStyle(color: Colors.white),
                     ),
                     subtitle: Text(
-                      "test",
+                      "",
                       style: data['is_watered'] == true
                           ? TextStyle(
                               color: Colors.black,
@@ -90,11 +93,10 @@ class _NotificationsState extends State<Notifications> {
                               style: TextStyle(color: AppConstants.purple),
                             ),
                             onPressed: () {
-                              _showDialog(context, 5);
                               //_realtimeDB.updateData();
                               _controller.setWater(
-                                  plant_name: data['plant_name'],
-                                  watering_time: data['watering_time']);
+                                  plantName: data['plant_name'],
+                                  wateringTime: data['watering_time']);
                             },
                           ),
                   ),
@@ -107,17 +109,19 @@ class _NotificationsState extends State<Notifications> {
     );
   }
 
-  Future _showDialog(BuildContext context, time) async {
+  Future _showDialog(String plantName, String photo, int wateringTime) async {
     var data = await showDialog(
       barrierDismissible: false,
       context: context,
       builder: (BuildContext context) {
         return CustomDialog(
-          point: time,
+          plantName: plantName,
+          photo: photo,
+          wateringTime: wateringTime,
         );
       },
     );
-    Navigator.pop(context, time);
+    // Navigator.pop(context, time);
     return data;
   }
 }

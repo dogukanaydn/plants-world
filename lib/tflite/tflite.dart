@@ -29,7 +29,7 @@ class _TFLiteState extends State<TFLite> {
 
   @override
   Widget build(BuildContext context) {
-    String plant_name;
+    String plantName;
     return Scaffold(
       appBar: AppBar(
         title: Text("Plant World"),
@@ -100,12 +100,12 @@ class _TFLiteState extends State<TFLite> {
                                           style: TextStyle(color: Colors.white),
                                         ),
                                         onPressed: () {
-                                          plant_name = result['label'];
+                                          plantName = result['label'];
                                           Navigator.push(
                                             context,
                                             MaterialPageRoute(
                                               builder: (context) => Details(
-                                                plant_name: plant_name,
+                                                plantName: plantName,
                                               ),
                                             ),
                                           );

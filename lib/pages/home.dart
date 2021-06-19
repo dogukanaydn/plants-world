@@ -56,7 +56,7 @@ class _HomeState extends State<Home> {
                       icon: Icon(Icons.delete),
                       onPressed: () {
                         _controller.deletePlant(
-                          plant_name: data['plant_name'],
+                          plantName: data['plant_name'],
                         );
                       },
                       // Icons.delete,

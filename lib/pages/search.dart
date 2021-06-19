@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:plants_world/bottom-navigation-bar/navigation.dart';
 import 'package:plants_world/theme/constants.dart';
 
 class Search extends StatefulWidget {

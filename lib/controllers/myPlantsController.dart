@@ -11,25 +11,25 @@ class PlantsController {
   }
 
   Future<void> addItem(
-      {int id, String plant_name, String photo, int watering_time}) async {
+      {int id, String plantName, String photo, int wateringTime}) async {
     var today = DateTime.now();
-    var time_watered = today.add(Duration(days: watering_time));
+    var timeWatered = today.add(Duration(days: wateringTime));
 
     DocumentReference documentReferencer = _mainCollection
         .doc(UserInformations.userUid)
         .collection('plants')
-        .doc(plant_name);
+        .doc(plantName);
 
     Map<String, dynamic> data = <String, dynamic>{
       "id": id,
-      "plant_name": plant_name,
+      "plant_name": plantName,
       "photo": photo,
-      "watering_time": watering_time,
+      "watering_time": wateringTime,
       "is_deleted": false,
       "is_watered": true,
       "time_added": today,
       "time_watered": today,
-      "time_next_watered": time_watered,
+      "time_next_watered": timeWatered,
     };
 
     await documentReferencer
@@ -46,11 +46,11 @@ class PlantsController {
     return _assetsQuery.snapshots();
   }
 
-  Future<void> deletePlant({String plant_name}) async {
+  Future<void> deletePlant({String plantName}) async {
     DocumentReference documentReferencer = _mainCollection
         .doc(UserInformations.userUid)
         .collection('plants')
-        .doc(plant_name);
+        .doc(plantName);
 
     Map<String, dynamic> data = <String, dynamic>{
       "is_deleted": true,
@@ -61,18 +61,18 @@ class PlantsController {
         .catchError((e) => print(e));
   }
 
-  Future<void> setWater({String plant_name, int watering_time}) async {
+  Future<void> setWater({String plantName, int wateringTime}) async {
     var today = DateTime.now();
-    var time_watered = today.add(Duration(days: watering_time));
+    var timeWatered = today.add(Duration(days: wateringTime));
     DocumentReference documentReferencer = _mainCollection
         .doc(UserInformations.userUid)
         .collection('plants')
-        .doc(plant_name);
+        .doc(plantName);
 
     Map<String, dynamic> data = <String, dynamic>{
       "is_watered": true,
       "time_watered": today,
-      "time_next_watered": time_watered,
+      "time_next_watered": timeWatered,
     };
     await documentReferencer
         .update(data)

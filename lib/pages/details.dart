@@ -5,8 +5,8 @@ import '../theme/constants.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
 class Details extends StatefulWidget {
-  final String plant_name;
-  Details({Key key, this.plant_name}) : super(key: key);
+  final String plantName;
+  Details({Key key, this.plantName}) : super(key: key);
 
   @override
   _DetailsState createState() => _DetailsState();
@@ -20,7 +20,7 @@ class _DetailsState extends State<Details> {
   void initState() {
     super.initState();
     // _realtimeDB.updateData();
-    print("plant name: ${widget.plant_name}");
+    print("plant name: ${widget.plantName}");
 
     print(DateTime.now());
     // Timer.periodic(new Duration(seconds: 1), (timer) {
@@ -36,9 +36,9 @@ class _DetailsState extends State<Details> {
   @override
   Widget build(BuildContext context) {
     int id;
-    String plant_name;
+    String plantName;
     String photo;
-    int watering_time;
+    int wateringTime;
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.white,
@@ -47,7 +47,7 @@ class _DetailsState extends State<Details> {
         title: Text('Details', style: CustomTextHeadline.headLine5),
       ),
       body: FutureBuilder<DocumentSnapshot>(
-        future: allPlants.doc(widget.plant_name).get(),
+        future: allPlants.doc(widget.plantName).get(),
         builder:
             (BuildContext context, AsyncSnapshot<DocumentSnapshot> snapshot) {
           if (snapshot.hasError) {
@@ -61,15 +61,14 @@ class _DetailsState extends State<Details> {
           if (snapshot.connectionState == ConnectionState.done) {
             Map<String, dynamic> data = snapshot.data.data();
             id = data['id'];
-            plant_name = data['plant_name'];
+            plantName = data['plant_name'];
             photo = data['photos'][0];
-            watering_time = data['watering_time'];
+            wateringTime = data['watering_time'];
 
-            print("id: $id and plant name: $plant_name");
             return ListView(
               children: [
                 imageSection(data),
-                buttonSection(id, plant_name, photo, watering_time),
+                buttonSection(id, plantName, photo, wateringTime),
                 photoGalleryHeadline,
                 photoGallerySection(data),
                 sunmarySection(data),
@@ -126,7 +125,7 @@ class _DetailsState extends State<Details> {
         ),
       );
 
-  Widget buttonSection(id, plant_name, photo, watering_time) => Container(
+  Widget buttonSection(id, plantName, photo, wateringTime) => Container(
         child: Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
@@ -146,9 +145,9 @@ class _DetailsState extends State<Details> {
                   onPressed: () {
                     _controller.addItem(
                         id: id,
-                        plant_name: plant_name,
+                        plantName: plantName,
                         photo: photo,
-                        watering_time: watering_time);
+                        wateringTime: wateringTime);
                     Navigator.push(
                       context,
                       MaterialPageRoute(builder: (context) => NavigationBar()),
