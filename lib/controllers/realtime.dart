@@ -4,6 +4,6 @@ class RealtimeDB {
   final databaseReference = FirebaseDatabase.instance.reference();
 
   void updateData() {
-    databaseReference.child('water').update({'isWatered': 'true'});
+    databaseReference.child('water').update({'isWatered': true});
   }
 }
