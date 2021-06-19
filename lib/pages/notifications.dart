@@ -17,6 +17,24 @@ class Notifications extends StatefulWidget {
 class _NotificationsState extends State<Notifications> {
   final PlantsController _controller = PlantsController();
   final RealtimeDB _realtimeDB = RealtimeDB();
+  Timestamp isWatered;
+
+  @override
+  Timer timer;
+
+  @override
+  void initState() {
+    timer = Timer.periodic(Duration(seconds: 10), (_) {
+      setState(() {});
+    });
+  }
+
+  bool checkWatered(Timestamp timestamp) {
+    if (timestamp.toDate().isAfter(DateTime.now())) {
+      return true;
+    }
+    return false;
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -46,22 +64,24 @@ class _NotificationsState extends State<Notifications> {
               Map<String, dynamic> data =
                   document.data() as Map<String, dynamic>;
 
+              isWatered = data['time_next_watered'];
+
               return Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 8.0),
                 child: Card(
-                  color: data['is_watered'] == true
+                  color: checkWatered(data['time_next_watered']) == true
                       ? AppConstants.lightPurple
                       : AppConstants.lightRed,
                   child: ListTile(
                     title: Text(
                       data['plant_name'],
-                      style: data['is_watered'] == true
+                      style: isWatered.toDate().isAfter(DateTime.now()) == true
                           ? TextStyle(color: Colors.black)
                           : TextStyle(color: Colors.white),
                     ),
                     subtitle: Text(
                       "",
-                      style: data['is_watered'] == true
+                      style: isWatered.toDate().isAfter(DateTime.now()) == true
                           ? TextStyle(
                               color: Colors.black,
                               fontWeight: FontWeight.w100,
@@ -74,7 +94,7 @@ class _NotificationsState extends State<Notifications> {
                     leading: CircleAvatar(
                       backgroundImage: NetworkImage(data['photo']),
                     ),
-                    trailing: data['is_watered'] == true
+                    trailing: isWatered.toDate().isAfter(DateTime.now()) == true
                         ? Icon(
                             Icons.check,
                             color: Colors.green[900],
