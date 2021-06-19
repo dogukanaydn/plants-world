@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:plants_world/user/userInformations.dart';
 
 class PlantsController {
   FirebaseFirestore _firestore;
@@ -15,7 +16,7 @@ class PlantsController {
     var time_watered = today.add(Duration(days: watering_time));
 
     DocumentReference documentReferencer = _mainCollection
-        .doc('o3d0fB74NdeaQNmvrw2SItbbo152')
+        .doc(UserInformations.userUid)
         .collection('plants')
         .doc(plant_name);
 
@@ -37,7 +38,7 @@ class PlantsController {
 
   Stream<QuerySnapshot> readItems() {
     Query _assetsQuery = _mainCollection
-        .doc('o3d0fB74NdeaQNmvrw2SItbbo152')
+        .doc(UserInformations.userUid)
         .collection('plants')
         .where('is_deleted', isEqualTo: false);
     return _assetsQuery.snapshots();
@@ -45,7 +46,7 @@ class PlantsController {
 
   Future<void> deletePlant({String plant_name}) async {
     DocumentReference documentReferencer = _mainCollection
-        .doc('o3d0fB74NdeaQNmvrw2SItbbo152')
+        .doc(UserInformations.userUid)
         .collection('plants')
         .doc(plant_name);
 
@@ -60,7 +61,7 @@ class PlantsController {
 
   Future<void> setWater({String plant_name}) async {
     DocumentReference documentReferencer = _mainCollection
-        .doc('o3d0fB74NdeaQNmvrw2SItbbo152')
+        .doc(UserInformations.userUid)
         .collection('plants')
         .doc(plant_name);
 
