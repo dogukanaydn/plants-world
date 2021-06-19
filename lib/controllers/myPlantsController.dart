@@ -13,7 +13,8 @@ class PlantsController {
   Future<void> addItem(
       {int id, String plantName, String photo, int wateringTime}) async {
     var today = DateTime.now();
-    var timeWatered = today.add(Duration(days: wateringTime));
+    // var timeWatered = today.add(Duration(days: wateringTime));
+    var timeWatered = today.add(Duration(seconds: 6));
 
     DocumentReference documentReferencer = _mainCollection
         .doc(UserInformations.userUid)
@@ -63,7 +64,7 @@ class PlantsController {
 
   Future<void> setWater({String plantName, int wateringTime}) async {
     var today = DateTime.now();
-    var timeWatered = today.add(Duration(days: wateringTime));
+    var timeWatered = today.add(Duration(seconds: 6));
     DocumentReference documentReferencer = _mainCollection
         .doc(UserInformations.userUid)
         .collection('plants')

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:plants_world/theme/constants.dart';
 import 'auth.dart';
 
 class LoginPageDemo extends StatefulWidget {
@@ -69,6 +70,7 @@ class _LoginPageDemoState extends State<LoginPageDemo> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        backgroundColor: AppConstants.purple,
         title: Text("Flutter Login"),
       ),
       body: Container(

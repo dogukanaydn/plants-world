@@ -32,6 +32,7 @@ class _TFLiteState extends State<TFLite> {
     String plantName;
     return Scaffold(
       appBar: AppBar(
+        backgroundColor: AppConstants.purple,
         title: Text("Plant World"),
       ),
       body: Center(
@@ -59,6 +60,7 @@ class _TFLiteState extends State<TFLite> {
                     ? Image.file(_imageFile)
                     : Image.network('https://i.imgur.com/sUFH1Aq.png')),
             ElevatedButton(
+              style: ElevatedButton.styleFrom(primary: AppConstants.purple),
               onPressed: () {
                 selectImage();
               },
