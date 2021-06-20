@@ -13,19 +13,15 @@ class Details extends StatefulWidget {
 }
 
 class _DetailsState extends State<Details> {
-  final PlantsController _controller = PlantsController();
+  final MyPlantsController _controller = MyPlantsController();
   // final RealtimeDB _realtimeDB = new RealtimeDB();
 
   @override
   void initState() {
     super.initState();
     // _realtimeDB.updateData();
-    print("plant name: ${widget.plantName}");
 
-    print(DateTime.now());
-    // Timer.periodic(new Duration(seconds: 1), (timer) {
-    //   debugPrint(DateTime.now().toString());
-    // });
+    print("plant name: ${widget.plantName}");
   }
 
   FirebaseFirestore firestore = FirebaseFirestore.instance;

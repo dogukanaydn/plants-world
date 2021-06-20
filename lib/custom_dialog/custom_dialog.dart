@@ -12,7 +12,7 @@ class CustomDialog extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final PlantsController _controller = PlantsController();
+    final MyPlantsController _controller = MyPlantsController();
 
     return Dialog(
       child: Container(

@@ -15,7 +15,7 @@ class Notifications extends StatefulWidget {
 }
 
 class _NotificationsState extends State<Notifications> {
-  final PlantsController _controller = PlantsController();
+  final MyPlantsController _controller = MyPlantsController();
   final RealtimeDB _realtimeDB = RealtimeDB();
   Timestamp isNextWatered;
   Timestamp isWatered;

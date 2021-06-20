@@ -1,16 +1,23 @@
 import 'package:flutter/material.dart';
+import 'package:plants_world/controllers/allPlantsController.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:plants_world/pages/details.dart';
 import 'package:plants_world/theme/constants.dart';
 
 class Search extends StatefulWidget {
-  Search({Key key}) : super(key: key);
-
   @override
   _SearchState createState() => _SearchState();
 }
 
 class _SearchState extends State<Search> {
+  AllPlantsController _allPlantsController = new AllPlantsController();
+
   @override
   Widget build(BuildContext context) {
+    String plantName;
+
+    double width = MediaQuery.of(context).size.width;
+    double height = MediaQuery.of(context).size.height;
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.white,
@@ -21,74 +28,85 @@ class _SearchState extends State<Search> {
           style: TextStyle(color: Colors.black),
         ),
       ),
-      body: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: <Widget>[
-          Padding(
-            padding: EdgeInsets.symmetric(horizontal: 8, vertical: 16),
-            child: TextField(
-              decoration: InputDecoration(
-                prefixIcon: Icon(Icons.search),
-                filled: true,
-                fillColor: AppConstants.searchGrey,
-                border:
-                    OutlineInputBorder(borderRadius: BorderRadius.circular(50)),
-                hintText: 'Search for plants',
+      body: StreamBuilder<QuerySnapshot>(
+        stream: _allPlantsController.readItems(),
+        builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
+          if (snapshot.hasError) {
+            return Text('Something went wrong');
+          }
+
+          if (snapshot.connectionState == ConnectionState.waiting) {
+            return Text("Loading");
+          }
+
+          return new ListView(
+            children: snapshot.data.docs.map((DocumentSnapshot document) {
+              Map<String, dynamic> data =
+                  document.data() as Map<String, dynamic>;
+              return buildSingleChildScrollView(width, height, data, plantName);
+            }).toList(),
+          );
+        },
+      ),
+    );
+  }
+
+  SingleChildScrollView buildSingleChildScrollView(double width, double height,
+      Map<String, dynamic> data, String plantName) {
+    return SingleChildScrollView(
+      child: Column(
+        children: [
+          Stack(
+            children: [
+              Container(
+                margin: EdgeInsets.only(bottom: 10),
+                width: width,
+                height: height * 0.5,
+                decoration: BoxDecoration(
+                  color: Colors.greenAccent,
+                  image: DecorationImage(
+                      image: NetworkImage(data['photos'][0]),
+                      fit: BoxFit.cover),
+                ),
+                child: Align(
+                  alignment: Alignment.bottomCenter,
+                  child: Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Container(
+                      color: AppConstants.purple,
+                      child: Padding(
+                        padding: const EdgeInsets.all(10.0),
+                        child: Text(
+                          "${data['plant_name']}",
+                          style: TextStyle(color: Colors.white, fontSize: 20),
+                        ),
+                      ),
+                    ),
+                  ),
+                ),
               ),
-            ),
+              ElevatedButton(
+                style: ElevatedButton.styleFrom(primary: AppConstants.purple),
+                onPressed: () {
+                  plantName = data['plant_name'];
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => Details(
+                        plantName: data['plant_name_en'],
+                      ),
+                    ),
+                  );
+                },
+                child: Text("Learn More"),
+              ),
+            ],
           ),
-          Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: Text(
-              'All Plants',
-              style: CustomTextHeadline.headLine6,
-            ),
-          ),
-          Expanded(
-            child: _buildGrid(),
-          )
-        ],
-      ),
-    );
-  }
-
-  Padding plantsImages() {
-    return Padding(
-      padding: const EdgeInsets.all(8.0),
-      child: Stack(
-        children: <Widget>[
-          Container(
-            width: 100,
-            height: 100,
-            color: AppConstants.lightPurple,
-          ),
-          Positioned(
-            top: 6,
-            left: 6,
-            right: 6,
-            child: Container(
-              width: 90,
-              height: 69,
-              color: Colors.white,
-            ),
-          ),
-          Positioned(
-            bottom: 4,
-            left: 6,
-            child: Text('Bitki adı'),
+          SizedBox(
+            height: 10,
           ),
         ],
       ),
     );
   }
-
-  Widget _buildGrid() => GridView.extent(
-      maxCrossAxisExtent: 150,
-      padding: const EdgeInsets.all(4),
-      mainAxisSpacing: 4,
-      crossAxisSpacing: 4,
-      children: _buildGridTileList(30));
-
-  List<Container> _buildGridTileList(int count) =>
-      List.generate(count, (i) => Container(child: plantsImages()));
 }

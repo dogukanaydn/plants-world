@@ -11,7 +11,7 @@ class Home extends StatefulWidget {
 }
 
 class _HomeState extends State<Home> {
-  final PlantsController _controller = PlantsController();
+  final MyPlantsController _controller = MyPlantsController();
 
   @override
   Widget build(BuildContext context) {
