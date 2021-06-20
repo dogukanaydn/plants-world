@@ -54,10 +54,6 @@ class _RootPageState extends State<RootPage> {
           auth: widget.auth,
           onSignedOut: _signedOut,
         );
-      // return HomePage(
-      //   auth: widget.auth,
-      //   onSignedOut: _signedOut,
-      // );
     }
     return LoginPageDemo(auth: widget.auth);
   }

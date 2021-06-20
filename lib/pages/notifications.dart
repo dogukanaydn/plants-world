@@ -3,7 +3,6 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:plants_world/controllers/myPlantsController.dart';
 import 'package:plants_world/controllers/realtime.dart';
-import 'package:plants_world/custom_dialog/custom_dialog.dart';
 import 'package:plants_world/theme/constants.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
@@ -117,7 +116,7 @@ class _NotificationsState extends State<Notifications> {
                                   style: TextStyle(color: AppConstants.purple),
                                 ),
                                 onPressed: () {
-                                  //_realtimeDB.updateData();
+                                  _realtimeDB.updateData();
                                   _controller.setWater(
                                       plantName: data['plant_name'],
                                       wateringTime: data['watering_time']);
@@ -131,21 +130,5 @@ class _NotificationsState extends State<Notifications> {
         },
       ),
     );
-  }
-
-  Future _showDialog(String plantName, String photo, int wateringTime) async {
-    var data = await showDialog(
-      barrierDismissible: false,
-      context: context,
-      builder: (BuildContext context) {
-        return CustomDialog(
-          plantName: plantName,
-          photo: photo,
-          wateringTime: wateringTime,
-        );
-      },
-    );
-    // Navigator.pop(context, time);
-    return data;
   }
 }
