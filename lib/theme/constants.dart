@@ -7,6 +7,7 @@ class AppConstants {
   static final lightRed = Color(0xFFF1948A);
   static final grey = Color(0xFFC4C4C4);
   static final searchGrey = Color(0xFFE5E8E8);
+  static final signUp = Color(0xFF4A235A);
 }
 
 class CustomTextHeadline {

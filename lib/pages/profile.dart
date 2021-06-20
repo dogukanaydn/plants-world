@@ -2,15 +2,20 @@ import 'package:flutter/material.dart';
 import 'package:plants_world/theme/constants.dart';
 import 'package:plants_world/auth/auth.dart';
 
-class ProfilePage extends StatelessWidget {
+class ProfilePage extends StatefulWidget {
   ProfilePage({this.auth, this.onSignedOut});
   final BaseAuth auth;
   final VoidCallback onSignedOut;
 
+  @override
+  _ProfilePageState createState() => _ProfilePageState();
+}
+
+class _ProfilePageState extends State<ProfilePage> {
   void _signOut() async {
     try {
-      await auth.signOut();
-      onSignedOut();
+      await widget.auth.signOut();
+      widget.onSignedOut();
     } catch (e) {
       print(e);
     }
@@ -59,7 +64,13 @@ class ProfilePage extends StatelessWidget {
           Positioned(
             right: 10,
             top: 0,
-            child: ElevatedButton(onPressed: _signOut, child: Text("Logout")),
+            child: ElevatedButton(
+              onPressed: _signOut,
+              child: Text(
+                "Logout",
+              ),
+              style: ElevatedButton.styleFrom(primary: AppConstants.signUp),
+            ),
           ),
         ],
       );
