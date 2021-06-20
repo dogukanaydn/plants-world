@@ -1,11 +1,11 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:plants_world/user/userInformations.dart';
 
-class PlantsController {
+class MyPlantsController {
   FirebaseFirestore _firestore;
   CollectionReference _mainCollection;
 
-  PlantsController() {
+  MyPlantsController() {
     _firestore = FirebaseFirestore.instance;
     _mainCollection = _firestore.collection('user_plants');
   }
